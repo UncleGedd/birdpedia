@@ -21,7 +21,7 @@ func newRouter() *mux.Router {
 }
 
 func connectToDb() *sql.DB {
-	db, err := sql.Open("pgx", "postgresql://postgres@localhost:5432/bird_encyclopedia")
+	db, err := sql.Open("pgx", "postgresql://postgres:postgres@pg-service.default:5432/bird_encyclopedia")
 	if err != nil {
 		log.Fatalf("could not connect to db: %v", err)
 	}
