@@ -19,6 +19,9 @@ spec:
        - name: bird-app
          image: geddunicorn/bird-app:latest
          imagePullPolicy: Always
+         envFrom:
+           - configMapRef:
+               name: birdapp-config
          resources:
            requests:
              cpu: 100m

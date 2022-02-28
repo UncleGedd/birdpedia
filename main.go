@@ -10,6 +10,7 @@ import (
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"log"
 	"net/http"
+	"os"
 )
 
 func newRouter() *mux.Router {
@@ -24,7 +25,8 @@ func newRouter() *mux.Router {
 }
 
 func connectToDb() *sql.DB {
-	db, err := sql.Open("pgx", "postgresql://postgres:postgres@localhost:5432/bird_encyclopedia")
+	dbHost := os.Getenv("DB_HOSTNAME")
+	db, err := sql.Open("pgx", fmt.Sprintf("postgresql://postgres:postgres@%s:5432/bird_encyclopedia", dbHost))
 	if err != nil {
 		log.Fatalf("could not connect to db: %v", err)
 	}
@@ -36,7 +38,8 @@ func connectToDb() *sql.DB {
 }
 
 func migrateDb() {
-	db, err := sql.Open("pgx", "postgresql://postgres:postgres@localhost:5432/bird_encyclopedia")
+	dbHost := os.Getenv("DB_HOSTNAME")
+	db, err := sql.Open("pgx", fmt.Sprintf("postgresql://postgres:postgres@%s:5432/bird_encyclopedia", dbHost))
 	if err != nil {
 		log.Fatalf("could not connect to db: %v", err)
 	}
@@ -48,7 +51,7 @@ func migrateDb() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := migrations.Up(); err != nil {
+	if err := migrations.Up(); err != nil && err != migrate.ErrNoChange {
 		log.Fatal(err)
 	}
 }

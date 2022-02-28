@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: birdapp-config
+  labels:
+    app: bird-app
+data:
+  DB_HOSTNAME: "pg-service.default"

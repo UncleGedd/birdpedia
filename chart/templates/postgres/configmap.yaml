@@ -5,6 +5,7 @@ metadata:
   labels:
     app: postgres
 data:
-  POSTGRES_DB: postgresdb
+  POSTGRES_DB: bird_encyclopedia
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres  # todo: make secret!
+  DB_HOSTNAME: "pg-service.default"
