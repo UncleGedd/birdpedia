@@ -9,5 +9,6 @@ Inspired by:
 `docker run -p 5432:5432 --name bird-postgres -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres`
 
 ## todo:
+- Install Flux
 - Install Istio
 - logging?

@@ -3,6 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/gorilla/mux"
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"log"
@@ -21,7 +24,7 @@ func newRouter() *mux.Router {
 }
 
 func connectToDb() *sql.DB {
-	db, err := sql.Open("pgx", "postgresql://postgres:postgres@pg-service.default:5432/bird_encyclopedia")
+	db, err := sql.Open("pgx", "postgresql://postgres:postgres@localhost:5432/bird_encyclopedia")
 	if err != nil {
 		log.Fatalf("could not connect to db: %v", err)
 	}
@@ -32,11 +35,30 @@ func connectToDb() *sql.DB {
 	return db
 }
 
+func migrateDb() {
+	db, err := sql.Open("pgx", "postgresql://postgres:postgres@localhost:5432/bird_encyclopedia")
+	if err != nil {
+		log.Fatalf("could not connect to db: %v", err)
+	}
+	instance, err := postgres.WithInstance(db, &postgres.Config{})
+	if err != nil {
+		log.Fatal(err)
+	}
+	migrations, err := migrate.NewWithDatabaseInstance("file://./db/migrations", "postgres", instance)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := migrations.Up(); err != nil {
+		log.Fatal(err)
+	}
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Hello World!")
 }
 
 func main() {
+	migrateDb()
 	r := newRouter()
 	http.ListenAndServe(":8080", r)
 }
