@@ -6,4 +6,4 @@ metadata:
   labels:
     app: bird-app
 data:
-  DB_HOSTNAME: "pg-service.default"
+  DB_HOSTNAME: "pg-service.birdpedia"
