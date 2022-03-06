@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
  name: bird-app
+ namespace: birdpedia
  labels:
    app: bird-app
 spec:
