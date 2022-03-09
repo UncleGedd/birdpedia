@@ -1,0 +1,5 @@
+resources:
+  - ../../base/postgres
+  - ../../base/bird-app
+patchesStrategicMerge:
+  - dev.yaml

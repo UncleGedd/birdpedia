@@ -1,0 +1,7 @@
+commonLabels:
+  app: bird-app
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - birdapp-configmap.yaml

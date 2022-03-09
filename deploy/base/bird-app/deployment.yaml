@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: bird-app
+ namespace: birdpedia
+ labels:
+   app: bird-app
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: bird-app
+ template:
+   metadata:
+     labels:
+       app: bird-app
+   spec:
+     containers:
+       - name: bird-app
+         image: geddunicorn/bird-app:latest
+         imagePullPolicy: Always
+         envFrom:
+           - configMapRef:
+               name: birdapp-config
+         resources:
+           requests:
+             cpu: 100m
+             memory: 512Mi
+           limits:
+             cpu: 250m
+             memory: 1024Mi
+         ports:
+           - name: http
+             containerPort: 8080
+             protocol: TCP
+     initContainers:
+       - name: init-db
+         image: k8s.gcr.io/e2e-test-images/jessie-dnsutils:1.3
+         command: ['sh', '-c', 'until nslookup pg-service.birdpedia; do echo waiting for pg-service; sleep 2; done;']

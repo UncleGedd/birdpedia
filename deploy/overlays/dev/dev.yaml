@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: birdapp-config
+  namespace: birdpedia
+data:
+  ANOTHER_DEV_VAR: "ima overlay"

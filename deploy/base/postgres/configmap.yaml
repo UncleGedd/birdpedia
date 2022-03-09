@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: birdpedia
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: bird_encyclopedia
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres  # todo: make secret!
+  DB_HOSTNAME: "pg-service.birdpedia"
