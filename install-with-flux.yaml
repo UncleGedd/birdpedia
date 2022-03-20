@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    istio-injection: disabled
+    istio-injection: enabled
   name: birdpedia
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta1
@@ -18,34 +18,35 @@ spec:
   secretRef:
     name: github-auth
 ---
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
+
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
 metadata:
-  name: bird-app
-  namespace: birdpedia
+ name: bird-app
+ namespace: birdpedia
 spec:
-  interval: 1m
-  prune: true
-  path: "./deploy/overlays/dev"
-  sourceRef:
-    kind: GitRepository
-    name: birdpedia
-    namespace: birdpedia
+ interval: 1m
+ chart:
+   spec:
+     chart: ./chart
+     version: ">=1.0.0"
+     sourceRef:
+       kind: GitRepository
+       name: birdpedia
+       namespace: birdpedia
+     interval: 1m
 ---
-# Leaving this here as a good HelmRelease example
-#apiVersion: helm.toolkit.fluxcd.io/v2beta1
-#kind: HelmRelease
-#metadata:
-#  name: bird-app
-#  namespace: birdpedia
-#spec:
-#  interval: 1m
-#  chart:
-#    spec:
-#      chart: ./chart
-#      version: ">=1.0.0"
-#      sourceRef:
-#        kind: GitRepository
-#        name: birdpedia
-#        namespace: birdpedia
-#      interval: 1m
+# Leaving this here as a good Kustomization example
+# apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+# kind: Kustomization
+# metadata:
+#   name: bird-app
+#   namespace: birdpedia
+# spec:
+#   interval: 1m
+#   prune: true # enable garbage collection
+#   path: "./deploy/overlays/dev"
+#   sourceRef:
+#     kind: GitRepository
+#     name: birdpedia
+#     namespace: birdpedia
