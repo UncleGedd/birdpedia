@@ -5,23 +5,23 @@ metadata:
   namespace: birdpedia
 spec:
   selector:
-    istio: ingressgateway # use the default IngressGateway
+    istio: ingress # use the default IngressGateway
   servers:
     - port:
         number: 80
         name: http
         protocol: HTTP
       hosts:
-        - birdapp.com
-      tls:
-        httpsRedirect: true # sends 301 redirect for http requests
-    - port:
-        number: 443
-        name: https-443
-        protocol: HTTPS
-      hosts:
-        - birdapp.com
-      tls:
-        mode: SIMPLE # enables HTTPS on this port
-        serverCertificate: /etc/certs/servercert.pem
-        privateKey: /etc/certs/privatekey.pem
+        - "birdapp.com"
+      # tls:
+      #   httpsRedirect: true # sends 301 redirect for http requests
+    # - port:
+    #     number: 443
+    #     name: https-443
+    #     protocol: HTTPS
+    #   hosts:
+    #     - birdapp.com
+    #   tls:
+    #     mode: SIMPLE # enables HTTPS on this port
+    #     serverCertificate: /etc/certs/servercert.pem
+    #     privateKey: /etc/certs/privatekey.pem

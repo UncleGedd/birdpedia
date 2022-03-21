@@ -18,7 +18,6 @@ spec:
   secretRef:
     name: github-auth
 ---
-
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -29,7 +28,7 @@ spec:
  chart:
    spec:
      chart: ./chart
-     version: ">=1.0.0"
+     version: ">=0.0.0"
      sourceRef:
        kind: GitRepository
        name: birdpedia
