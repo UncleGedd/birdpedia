@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-config
-  namespace: birdpedia
+  namespace: {{ .Values.namespace }}
   labels:
     app: postgres
 data:

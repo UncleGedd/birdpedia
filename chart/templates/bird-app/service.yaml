@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
  name: bird-app-service
- namespace: birdpedia
+ namespace: {{ .Values.namespace }}
 spec:
  selector:
    app: bird-app
